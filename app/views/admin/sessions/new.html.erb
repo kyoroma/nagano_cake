@@ -1,38 +1,108 @@
-<p id="notice"></p>
-<div class="container text-center">
-  <%= form_with(model: resource, local: true, url: session_path(resource_name), id: "admin-login-form") do |f| %>
-    <h2>管理者ログイン</h2>
+<header>
+  <style>
+    .span {
+      color: #fff;
+    }
 
-    <div class="container text-center">
-      <div class="row justify-content-center">
-        <div class="col" style="max-width: 100%;">
-          <div class="form-group form-inline" style="text-align: center;">
-            <%= f.label :email, class: "mr-5" %>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
-          </div>
-        </div>
-      </div>
+    footer {
+      background-color: #848282;
+      }
 
-      <div class="row justify-content-center">
-        <div class="col">
-          <div class="form-group form-inline" style="text-align: center;">
-            <%= f.label :password, class: "mr-3" %>
-            <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
-          </div>
-        </div>
-      </div>
-
-      <% if devise_mapping.rememberable? %>
-        <div class="form-group">
-          <%= f.check_box :remember_me, class: "form-check-input" %>
-          <%= f.label :remember_me, class: "form-check-label" %>
-        </div>
+  </style>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <%= link_to admin_root_path, class: "navbar-brand" do %>
+        <span>NaganoCake</span>
       <% end %>
-
-      <div class="form-group">
-        <%= f.submit "ログイン", class: "btn btn-primary" %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto d-flex justify-content-end">
+          <% if admin_signed_in? %>
+            <li class="nav-item">
+              <%= link_to admin_items_path, class: "nav-link text-light" do %>
+                <i class="fas fa-shopping-cart"></i> 商品一覧
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to admin_customers_path, class: "nav-link text-light" do %>
+                <i class="fas fa-user"></i> 会員一覧
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to destroy_admin_session_path, method: :delete, class: "nav-link text-light" do %>
+                <i class="fas fa-sign-out-alt"></i> ログアウト
+              <% end %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to public_homes_about_path, class: "nav-link text-light" do %>
+                <i class="fas fa-link" aria-hidden="true"></i> About
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to admin_items_path, class: "nav-link text-light" do %>
+                <i class="fas fa-shopping-cart"></i> 商品一覧
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to new_customer_registration_path, class: "nav-link text-light" do %>
+                <i class="fas fa-user-plus" aria-hidden="true"></i> 新規登録
+              <% end %>
+            </li>
+            <li class="nav-item">
+              <%= link_to new_admin_session_path, class: "nav-link text-light" do %>
+                <i class="fas fa-sign-in-alt"></i> ログイン
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
-  <% end %>
-</div>
-<%= render "admin/shared/links" %>
+  </nav>
+</header>
+<body>
+  <p id="notice"></p>
+  <div class="container mx-auto">
+    <%= form_with(model: resource, local: true, url: session_path(resource_name), id: "admin-login-form") do |f| %>
+      <h2>管理者ログイン</h2>
+
+      <div class="container text-center">
+        <div class="row justify-content-center mb-3">
+          <div class="col-12 col-md-6">
+            <div class="d-flex align-items-center mt-4">
+              <div class="mr-4" style="white-space: nowrap; width: 150px;">
+                <%= f.label :メールアドレス %>
+              </div>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-sm" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center mb-3">
+          <div class="col-12 col-md-6">
+            <div class="d-flex align-items-center">
+              <div class="mr-5" style="white-space: nowrap; width: 130px;">
+                <%= f.label :パスワード %>
+              </div>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-sm" %>
+            </div>
+          </div>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="form-group">
+            <%= f.check_box :remember_me, class: "form-check-input" %>
+            <%= f.label :remember_me, class: "form-check-label" %>
+          </div>
+        <% end %>
+
+        <div class="form-group">
+          <%= f.submit "ログイン", class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= render "admin/shared/links" %>
+</body>

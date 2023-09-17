@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
-
   namespace :public do
+    resources :customers, only: [:edit, :update] do
+      member do
+        patch 'deactivate' 
+      end
+    end
+    get 'customers/my_page'
+    get 'customers/confirm_deactivation'
     get 'homes/top'
     get 'homes/about'
-    get '/about', to: 'static_pages#about', as: 'about'
   end
+
+  get '/about', to: 'public/static_pages#about', as: 'about'
+
   devise_for :customers, skip: [:passwords], controllers: {
     sessions: 'public/sessions',
     registrations: 'public/registrations'
@@ -26,6 +34,6 @@ Rails.application.routes.draw do
     resources :items
   end
 
-  root to: 'admin/homes#top'
+  root to: 'public/homes#top'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
