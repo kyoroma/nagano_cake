@@ -1,149 +1,142 @@
-<header>
+<body>
   <style>
     .span {
       color: #fff;
     }
+    
+    h2 {
+      margin: 20px 0  0 60px;
+      padding: 0 20px;
+      background-color: #E5E8E8;
+    }
 
-    footer {
-      background-color: #848282;
-      }
+    h5 {
+      margin: 15px 0 15px 100px;
+      padding: 0 20px;
+      background-color: #E5E8E8;
+    }
 
   </style>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <%= link_to root_path, class: "navbar-brand" do %>
-        <span>NaganoCake</span>
-      <% end %>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto d-flex justify-content-end">
-          <% if customer_signed_in? %>
-            <li class="nav-item">
-            <%= link_to public_customers_my_page_path, class: "nav-link text-light" do %>
-              <i class="fas fa-user"></i> マイページ
-            <% end %>
-          </li>
-            <li class="nav-item">
-              <%= link_to public_customers_items_path, class: "nav-link text-light" do %>
-                <i class="fas fa-shopping-cart"></i> 商品一覧
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to destroy_customer_session_path, method: :delete, class: "nav-link text-light" do %>
-                <i class="fas fa-sign-out-alt"></i> ログアウト
-              <% end %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to public_homes_about_path, class: "nav-link text-light" do %>
-                <i class="fas fa-link" aria-hidden="true"></i> About
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to customer_items_path, class: "nav-link text-light" do %>
-                <i class="fas fa-shopping-cart"></i> 商品一覧
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to new_customer_registration_path, class: "nav-link text-light" do %>
-                <i class="fas fa-user-plus" aria-hidden="true"></i> 新規登録
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= link_to new_customer_session_path, class: "nav-link text-light" do %>
-                <i class="fas fa-sign-in-alt"></i> ログイン
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</header>
-<body>
+
+<%= render partial: 'public/shared/header' %>
+
   <p id="notice"></p>
-  <div class="container mx-auto">
-    <h2>新規登録</h2>
+    <div class="container mx-auto">
+      <h2 style="display: inline-block;">新規会員登録</h2>
 
-      <%= form_with(model: resource, url: registration_path(resource_name), local: true) do |f| %>
-        <%= render "public/shared/error_messages", resource: resource %>
+        <%= form_with(model: resource, url: registration_path(resource_name), local: true) do |f| %>
+          <%= render "public/shared/error_messages", resource: resource %>
 
-          <div class="container mt-5">
-            <div class="row">
-              <div class="col-sm-3 col-xs-12">
-                <%= f.label :name, "名前" %>
-              </div>
-              <div class="col-sm-9 col-xs-12">
-                <div class="form-inline">
-                  <span class="mr-4">(姓)</span>
-                  <%= f.text_field :last_name, class: "form-control form-control-sm mr-3" %>
-                  <span class="mr-4">(名)</span>
-                  <%= f.text_field :first_name, class: "form-control form-control-sm" %>
+            <div class="container mt-5">
+              <div class="row">
+                <div class="col-sm-3 col-xs-12">
+                  <%= f.label :last_name, "名前", class: "mx-2" %>
+                </div>
+                <div class="col-sm-9 col-xs-12">
+                  <div class="form-inline">
+                    <span class="mr-4">(姓)</span>
+                    <%= f.text_field :last_name, class: "form-control form-control-sm mr-3" %>
+                    <span class="mr-4">(名)</span>
+                    <%= f.text_field :first_name, class: "form-control form-control-sm" %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="container">
-            <div class="row mt-2">
-              <div class="col-sm-3 col-xs-12">
-                <%= f.label :name, "フリガナ" %>
-              </div>
-              <div class="col-sm-9 col-xs-12">
-                <div class="form-inline align-items-center">
-                  <span class="mr-2">(セイ)</span>
-                  <%= f.text_field :last_name, class: "form-control form-control-sm mr-3" %>
-                  <span class="mr-2">(メイ)</span>
-                  <%= f.text_field :first_name, class: "form-control form-control-sm" %>
+            <div class="container">
+              <div class="row mt-2">
+                <div class="col-sm-3 col-xs-12">
+                  <%= f.label :last_name_kana, "フリガナ", class: "mx-2" %>
+                </div>
+                <div class="col-sm-9 col-xs-12">
+                  <div class="form-inline align-items-center">
+                    <span class="mr-2">(セイ)</span>
+                    <%= f.text_field :last_name_kana, class: "form-control form-control-sm mr-3" %>
+                    <span class="mr-2">(メイ)</span>
+                    <%= f.text_field :first_name_kana, class: "form-control form-control-sm" %>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="container">
-            <div class="row mt-2">
-              <div class="col-sm-3 col-xs-12">
-                <%= f.label :email, "メールアドレス" %>
-              </div>
-              <div class="col-sm-8 col-xs-12", style="padding-left: 65px;">
-                <%= f.email_field :email, class: "form-control form-control-sm", style: "width: 174px;" %>
+            <div class="container">
+              <div class="row mt-2">
+                <div class="col-sm-3 col-xs-12">
+                  <%= f.label :email, "メールアドレス", class: "mx-2" %>
+                </div>
+                <div class="col-sm-8 col-xs-12", style="padding-left: 65px;">
+                  <%= f.email_field :email, class: "form-control form-control-sm", style: "width: 174px;" %>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="form-group">
-            <%= f.label :postal_code, "郵便番号 (ハイフンなし)" %>
-            <%= f.text_field :postal_code, class: "form-control" %>
-          </div>
+            <div class="container">
+              <div class="row mt-2">
+                <div class="col-sm-3 col-xs-12">
+                  <%= f.label :postal_code, "郵便番号 (ハイフンなし)", class: "mx-2" %>
+                </div>
+                <div class="col-sm-8 col-xs-12", style="padding-left: 65px;">
+                  <%= f.text_field :postal_code, class: "form-control form-control-sm", style: "width: 174px;" %>
+                </div>
+              </div>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :address, "住所" %>
-            <%= f.text_field :address, class: "form-control" %>
-          </div>
+            <div class="container">
+              <div class="row mt-2">
+                <div class="col-sm-3 col-xs-12">
+                  <%= f.label :address, "住所", class: "mx-2" %>
+                </div>
+                <div class="col-sm-8 col-xs-12", style="padding-left: 65px;">
+                  <%= f.text_field :address, class: "form-control form-control-sm", style: "width: 415.59px;" %>
+                </div>
+              </div>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :phone_number, "電話番号 (ハイフンなし)" %>
-            <%= f.text_field :phone_number, class: "form-control" %>
-          </div>
+            <div class="container">
+              <div class="row mt-2">
+                <div class="col-sm-3 col-xs-12">
+                  <%= f.label :phone_number, "電話番号 (ハイフンなし)", class: "mx-2" %>
+                </div>
+                <div class="col-sm-8 col-xs-12", style="padding-left: 65px;">
+                  <%= f.text_field :phone_number, class: "form-control form-control-sm", style: "width: 174px;" %>
+                </div>
+              </div>
+            </div>
 
-          <div class="form-group">
-            <%= f.label :password, "パスワード (6文字以上)" %>
-            <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <%= f.label :password_confirmation, "パスワード（確認用）" %>
-            <%= f.password_field :password_confirmation,autocomplete: "new-password", class: "form-control" %>
-          </div>
+            <div class="container">
+              <div class="row mt-2">
+                <div class="col-sm-3 col-xs-12">
+                  <%= f.label :password, "パスワード (6文字以上)", class: "mx-2" %>
+                </div>
+                <div class="col-sm-8 col-xs-12", style="padding-left: 65px;">
+                  <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-control-sm", style: "width: 174px;" %>
+                </div>
+              </div>
+            </div>
 
-          <div class="form-group">
-            <%= f.submit "新規登録", class: "btn btn-primary" %>
-          </div>
-        <% end %>
+            <div class="container">
+              <div class="row mt-2">
+                <div class="col-sm-3 col-xs-12">
+                  <%= f.label :password_confirmation, "パスワード（確認用）", class: "mx-2" %>
+                </div>
+                <div class="col-sm-8 col-xs-12", style="padding-left: 65px;">
+                  <%= f.password_field :password_confirmation,autocomplete: "new-password", class: "form-control form-control-sm", style: "width: 174px;" %>
+                </div>
+              </div>
+            </div>
 
-        <p>既に登録済みの方は<a href="<%= new_customer_session_path %>">こちら</a>からログインしてください。</p>
-      </div>
+            <div class="container">
+              <div class="row mt-2">
+                <div class="col-sm-3 col-xs-12">
+                </div>
+                <div class="col-sm-8 col-xs-12", style="padding-left: 65px;">
+                  <%= f.submit "新規登録", class: "btn btn-primary", style: "width: 150px;" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+              <h5 style="display: inline-block;">既に登録済みの方</h5>
+                <p style="margin-left: 150px;"><%= link_to "こちら", new_customer_session_path, style: "text-decoration: underline;" %>からログインしてください。</p>
     </div>
-  </div>
 </body>
