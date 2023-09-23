@@ -11,7 +11,26 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    
+    .container {
+      min-height: 100%;
+    }
+    
+    .footer {
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      background-color: #f8f9fa;
+    }
+  </style>
+  
   <body>
     
     <%= yield %>

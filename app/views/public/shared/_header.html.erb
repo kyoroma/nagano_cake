@@ -11,12 +11,12 @@
         <ul class="navbar-nav ml-auto d-flex justify-content-end">
           <% if customer_signed_in? %>
             <li class="nav-item">
-              <%= link_to public_customers_my_page_path, class: "nav-link text-light" do %>
+              <%= link_to public_customer_my_page_path(current_customer), class: "nav-link text-light" do %>
                 <i class="fas fa-user"></i> マイページ
               <% end %>
             </li>
             <li class="nav-item">
-              <%= link_to public_customers_items_path, class: "nav-link text-light" do %>
+              <%= link_to customer_items_path, class: "nav-link text-light" do %>
                 <i class="fas fa-shopping-cart"></i> 商品一覧
               <% end %>
             </li>
@@ -27,7 +27,7 @@
             </li>
           <% else %>
             <li class="nav-item">
-              <%= link_to public_homes_about_path, class: "nav-link text-light" do %>
+              <%= link_to public_about_path, class: "nav-link text-light" do %>
                 <i class="fas fa-link" aria-hidden="true"></i> About
               <% end %>
             </li>

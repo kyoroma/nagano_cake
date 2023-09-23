@@ -1,17 +1,27 @@
 Rails.application.routes.draw do
   namespace :public do
-    resources :customers, only: [:edit, :update] do
-      member do
-        patch 'deactivate' 
+    resources :orders do
+      collection do
+        post 'confirm_order'
+        get 'order_completed'
+        post 'place_order'
       end
     end
-    get 'customers/my_page'
-    get 'customers/confirm_deactivation'
-    get 'homes/top'
-    get 'homes/about'
+
+    resources :customers, only: [:edit, :update] do
+      member do
+        get 'confirm_deactivation'
+        patch 'deactivate'
+      end
+      get 'edit', on: :member
+    end
+
+    get 'my_page', to: 'customers#my_page', as: 'customer_my_page'
+    get 'homes/top', to: 'homes#top', as: 'home_top'
+    get 'homes/about', to: 'homes#about', as: 'home_about'
   end
 
-  get '/about', to: 'public/static_pages#about', as: 'about'
+  get '/about', to: 'static_pages#about', as: 'public_about'
 
   devise_for :customers, skip: [:passwords], controllers: {
     sessions: 'public/sessions',

@@ -1,2 +1,80 @@
-<h1>Public::Customers#my_page</h1>
-<p>Find me in app/views/public/customers/my_page.html.erb</p>
+<style>
+  .custom-table {
+    border-collapse: collapse;
+    width: 90%;
+  }
+
+  .custom-table th, .custom-table td {
+    border: 1px solid #000;
+  }
+
+  th {
+    background-color: #E5E8E8;
+  }
+</style>
+<%= render partial: 'public/shared/header' %>
+
+<div class="container-fluid mx-auto" style="margin-right: 20px;">
+  <div class="row row-cols-2">
+    <div class="col-12 col-md-6">
+      <div class="mt-5 mb-4 text-center">
+        <h3 style="display: inline-block; white-space: nowrap; background-color: #E5E8E8; padding: 0 20px; margin-left: 20px;">マイページ</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-cols-4 mb-3 align-items-center">
+    <div class="col-1 mr-4" style="white-space: nowrap;">
+      <h4 style="display: inline-block;"><strong>登録情報</strong></h4>
+    </div>
+    <div class="col" style="white-space: nowrap;">
+      <h3>
+        <%= link_to "編集する", edit_public_customer_path(@customer), class: "btn btn-success", style: "width: 130px;" %>
+      </h3>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+
+  <table class="table table-bordered custom-table">
+    <tbody>
+      <tr>
+        <th>氏名</th>
+        <td><%= @customer.full_name %></td>
+      </tr>
+      <tr>
+        <th>カナ</th>
+        <td><%= @customer.full_name_kana %></td>
+      </tr>
+      <tr>
+        <th>郵便番号</th>
+        <td><%= @customer.postal_code %></td>
+      </tr>
+      <tr>
+        <th>住所</th>
+        <td><%= @customer.address %></td>
+      </tr>
+      <tr>
+        <th>電話番号</th>
+        <td><%= @customer.phone_number %></td>
+      </tr>
+      <tr>
+        <th>メールアドレス</th>
+        <td><%= @customer.email %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row row-cols-4 mt-4 mb-5 align-items-center">
+    <div class="col-2" style="white-space: nowrap;">
+      <h4 style="display: inline-block;"><strong>注文履歴</strong></h4>
+    </div>
+    <div class="col px-0" style="white-space: nowrap;">
+      <h3>
+         <%= link_to "一覧を見る", public_orders_path, class: "btn btn-primary", style: "width: 150px;" %>
+      </h3>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+</div>

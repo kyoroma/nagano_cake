@@ -1,2 +1,17 @@
-<h1>Public::Customers#confirm_deactivation</h1>
-<p>Find me in app/views/public/customers/confirm_deactivation.html.erb</p>
+<%= render partial: 'public/shared/header' %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 mt-5 text-center">
+      <strong>本当に退会しますか？</strong>
+      <div class="text-center mt-4">
+        <p>退会すると、会員登録情報や<br>これまでの購入履歴が閲覧できなくなります。
+        <br>退会する場合は、「退会する」をクリックしてください。</p>
+      </div>
+      <div class="text-center mt-4">
+        <%= link_to "退会しない", public_customer_my_page_path, class: "btn btn-primary mr-4" %>
+        <%= link_to "退会する", deactivate_public_customer_path(current_customer), method: :patch, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+</div>
