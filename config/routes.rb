@@ -15,6 +15,10 @@ Rails.application.routes.draw do
       end
       get 'edit', on: :member
     end
+    
+    namespace :customer do
+      resources :items, only: [:index, :show]
+    end
 
     get 'my_page', to: 'customers#my_page', as: 'customer_my_page'
     get 'homes/top', to: 'homes#top', as: 'home_top'
@@ -38,10 +42,6 @@ Rails.application.routes.draw do
     resources :orders, only: [:show]
     resources :customers, only: [:index, :show, :edit]
     delete '/sign_out', to: 'sessions#destroy', as: :destroy_admin_session
-  end
-
-  namespace :customer do
-    resources :items
   end
 
   root to: 'public/homes#top'

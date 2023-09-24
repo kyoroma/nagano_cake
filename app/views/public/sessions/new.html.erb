@@ -8,100 +8,78 @@
 <%= render partial: 'public/shared/header' %>
 
 <p id="notice"></p>
-  <div class="container mx-auto">
+  <div class="container">
     <%= form_with(model: resource, local: true, url: session_path(resource_name), id: "public-login-form") do |f| %>
-      <div class="row row-cols-4">
+      <div class="mt-2 mb-2 ml-5 pl-5">
+        <h3 style="display: inline-block; white-space: nowrap;">ログイン</h3>
+      </div>
+  
+      <div class="row row-cols-2">
         <div class="col">
-          <div class="mt-2 mb-2 ml-5 text-center">
-            <h3 style="display: inline-block; white-space: nowrap;">ログイン</h3>
+          <div class="mt-2 ml-4 text-center">
+            <p style="background-color: #E5E8E8; display: inline-block; white-space: nowrap;">会員の方はこちらからログイン</p>
           </div>
         </div>
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
+        <div class="col-6"></div>
       </div>
-      <div class="container"></div>
+      
+      <div class="container">
+        <div class="row row-3 ml-5">
+          <div class="col-2"></div>
+          <div class="col-4 col-md-6 pl-0">
+            <div class="d-flex align-items-center">
+              <div class="pb-2" style="white-space: nowrap;">
+                <%= f.label :メールアドレス, for: "user_email", class: "mr-4 ml-5" %>
+              </div>
+              <div class="col-6 pl-0 form-group">
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-sm", style: "width: 300px;", id: "user_email" %>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row row-3 ml-5">
+          <div class="col-2"></div>
+          <div class="col-4 col-md-6 pl-0">
+            <div class="d-flex align-items-center">
+              <div class="text-center mr-2" style="white-space: nowrap;">
+                <%= f.label :パスワード, for: "user_password", class: "pb-2 mr-4 ml-5" %>
+              </div>
+              <div class="col-6 form-group">
+                <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-sm pb-0 ml-2", style: "width: 300px;", id: "user_password" %>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row row-col-3 justify-content-center mb-3">
+          <div class="col-4"></div>
+            <div class="col text-left" style="padding: 0 0 0 50px;">
+              <%= f.submit "ログイン", class: "btn btn-primary", style: "width: 150px;" %>
+            </div>
+            <div class="col-4"></div>
+          </div>
+        </div>
+    
         <div class="row row-cols-2">
           <div class="col">
-            <div class="mt-3 ml-4 text-center">
-              <p style="background-color: #E5E8E8; display: inline-block;">会員の方はこちらからログイン</p>
+            <div class="mt-2 mb-2 ml-4 text-center">
+              <p style="background-color: #E5E8E8; display: inline-block;">会員登録がお済みではない方</p>
             </div>
           </div>
           <div class="col-6"></div>
         </div>
-      </div>
-
-      <div class="container text-center">
-        <div class="row justify-content-center mb-3">
-          <div class="col-12 col-md-6">
-            <div class="d-flex align-items-center mt-4">
-              <div class="mr-4" style="white-space: nowrap;">
-                <%= f.label :メールアドレス, for: "user_email" %>
-              </div>
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-sm", id: "user_email" %>
+    
+        <div class="row row-cols-3">
+          <div class="col-3"></div>
+          <div class="col">
+            <div class="mb-4 ml-4">
+              <p style="display: inline-block; white-space: nowrap;"><%= link_to "こちら", new_customer_registration_path, style: "text-decoration: underline;" %>から新規登録してください。</p>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="container text-center">
-        <div class="row justify-content-center mb-3">
-          <div class="col-12 col-md-6">
-            <div class="d-flex align-items-center">
-              <div class="mr-4" style="white-space: nowrap;">
-                <%= f.label :パスワード, for: "user_password", style: "margin-right: 30px" %>
-              </div>
-              <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-sm", id: "user_password" %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container text-center">
-        <div class="row justify-content-center mb-3">
-          <div class="col-12 col-md-6 ml-5">
-            <div class="d-flex align-items-center">
-              <% if devise_mapping.rememberable? %>
-                <div class="form-group">
-                  <%= f.check_box :remember_me, class: "form-check-input" %>
-                  <%= f.label :remember_me, class: "form-check-label" %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container text-center">
-        <div class="row row-col-3 justify-content-center mb-3">
-          <div class="col-4"></div>
-          <div class="col text-left", style="padding: 0 0 0 60px;">
-            <%= f.submit "ログイン", class: "btn btn-primary", style: "width: 150px;" %>
-          </div>
-          <div class="col-4"></div>
+          <div class="col-3"></div>
         </div>
       </div>
     <% end %>
   </div>
-  <div class="container mx-auto">
-    <div class="row row-cols-2">
-      <div class="col">
-        <div class="mt-2 mb-2 ml-4 text-center">
-          <p style="background-color: #E5E8E8; display: inline-block;">会員登録がお済みではない方</p>
-        </div>
-      </div>
-      <div class="col-6"></div>
-    </div>
-  </div>
 
-  <div class="container mx-auto">
-    <div class="row row-cols-3">
-      <div class="col-3"></div>
-      <div class="col">
-        <div class="mb-4 ml-4">
-          <p><%= link_to "こちら", new_customer_registration_path, style: "text-decoration: underline;" %>から新規登録してください。</p>
-        </div>
-      </div>
-      <div class="col-3"></div>
-    </div>
-  </div>
