@@ -1,30 +1,95 @@
+<style>
+  .custom-input {
+    width: 435px;
+  }
+  
+  h3 {
+    background-color: #E5E8E8;
+    padding: 0 20px;
+    margin-top: 10px;
+  }
+  
+</style>
+
 <%= render partial: 'admin/shared/header' %>
 
-<div class="container mt-5">
-  <h2>商品新規登録</h2>
-  <%= form_with(model: @item, url: admin_items_path, local: true, html: {multipart: true}) do |form| %>
-    <div class="form-group">
-      <%= form.label :image, "商品画像" %>
-      <%= form.file_field :image, accept: "image/*" %>
-    </div>
+<p id="notice"></p>
+  <div class="container mx-auto">
+    <h3 style="display: inline-block;">商品新規登録</h3>
+    <%= form_with(model: @item, url: admin_items_path, local: true, html: {multipart: true}) do |form| %>
+      <div class="container mt-3">
+        <div class="row row-cols-4">
+          <div class="col-2"></div>
+          <div class="col-2" style="white-space: nowrap;">
+            <%= form.label :image, "商品画像" %>
+          </div>
+          <div class="col-6">
+            <div class="form-group text-left" style="white-space: nowrap;">
+              <%= form.file_field :image, accept: "image/*" %>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <%= form.label :name, "商品名" %>
-      <%= form.text_field :name, class: "form-control", placeholder: "商品名を入力してください" %>
-    </div>
+      <div class="container">
+        <div class="row row-cols-3">
+          <div class="col-2"></div>
+          <div class="col-2 col-xs-12" style="white-space: nowrap;">
+            <%= form.label :name, "商品名", class: "mt-2" %>
+          </div>
+          <div class="col-6">
+            <div class="form-group text-left" style="white-space: nowrap;">
+              <%= form.text_field :name, class: "form-control", placeholder: "商品名" %>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <%= form.label :introduction, "商品説明" %>
-      <%= form.text_area :introduction, class: "form-control", placeholder: "商品説明を入力してください" %>
-    </div>
+       <div class="container">
+        <div class="row row-cols-4">
+          <div class="col-2"></div>
+          <div class="col-2 col-xs-12" style="white-space: nowrap;">
+            <%= form.label :introduction, "商品説明" %>
+          </div>
+          <div class="col-6">
+            <div class="form-group text-left" style="white-space: nowrap;">
+              <%= form.text_area :introduction, class: "form-control", style: "height: 200px;", placeholder: "ここに説明文を記述します" %>
+            </div>
+          </div>
+          <div class="col-2"></div>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <%= form.label :price, "税抜価格 (円)" %>
-      <%= form.number_field :price, class: "form-control", placeholder: "税抜価格を入力してください" %>
-    </div>
+      <div class="container">
+        <div class="row row-cols-4">
+          <div class="col-2"></div>
+          <div class="col-2 col-xs-12" style="white-space: nowrap;">
+            <%= form.label :price, "税抜価格", class: "mt-2" %>
+          </div>
+          <div class="col-7 pr-0">
+            <div class="form-group text-left" style="white-space: nowrap;">
+              <div class="d-flex">
+                <%= form.number_field :price, class: "form-control custom-input", style: "width: 435px;", placeholder: "1000" %>
+                <span style="line-height: 2.4rem;">円</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-1"></div>
+        </div>
+      </div>
 
-    <div class="actions">
-      <%= form.submit "新規登録", class: "btn btn-primary" %>
-    </div>
-  <% end %>
-</div>
+      <div class="container mb-3">
+        <div class="row justify-content-center">
+          <div class="col-md-8 text-center">
+            <div class="form-group"> 
+              <div class="actions">
+                <%= form.submit "新規登録", class: "btn btn-primary", style: "width: 150px;" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
