@@ -2,11 +2,12 @@ class Admin::ItemsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @items = Item.all
+    @items = Item.page(params[:page]).per(10)
   end
 
   def show
     @item = Item.find(params[:id])
+    render 'show'
   end
 
   def new
@@ -47,6 +48,6 @@ class Admin::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :description, :price, :image_url)
+    params.require(:item).permit(:name, :introduction, :price, :image)
   end
 end

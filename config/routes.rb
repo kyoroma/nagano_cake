@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: 'homes#top'
-    resources :items
+    resources :items, except: [:destroy]
     resources :orders, only: [:show]
     resources :customers, only: [:index, :show, :edit]
     delete '/sign_out', to: 'sessions#destroy', as: :destroy_admin_session
