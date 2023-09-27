@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   namespace :public do
+    
+    resources :items, only: [:index, :show], controller: 'items'
+    
     resources :orders do
       collection do
         post 'confirm_order'
@@ -14,10 +17,6 @@ Rails.application.routes.draw do
         patch 'deactivate'
       end
       get 'edit', on: :member
-    end
-    
-    namespace :customer do
-      resources :items, only: [:index, :show]
     end
 
     get 'my_page', to: 'customers#my_page', as: 'customer_my_page'
