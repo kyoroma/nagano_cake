@@ -1,14 +1,13 @@
 <%= render partial: 'public/shared/header' %>
 
 <div class="container mt-5">
-  <h1>商品一覧(<%= @items.count %>件)</h1>
-  <div class="row">
+  <h3><strong>商品一覧</strong><span style="font-size: 0.95rem; margin-left: 10px;">(全<%= @items.count %>件)</span></h3>
+  <div class="row mt-3">
     <% @items.each do |item| %>
       <div class="col-md-3">
         <%= image_tag item.image, class: "img-fluid" %>
-        <h3><%= item.name %></h3>
+        <p class="mt-2"><strong><%= link_to item.name, public_item_path(item) %></strong></p>
         <p>¥<%= item.price.to_i.to_s(:delimited) %></p>
-        <%= link_to "詳細を見る", public_item_path(item), class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
