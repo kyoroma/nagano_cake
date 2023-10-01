@@ -1,0 +1,28 @@
+<%= render partial: 'public/shared/header' %>
+
+<div class="container mt-5">
+  <div class="row mt-5">
+    <div class="col-md-4 text-center">
+      <%= image_tag @item.image, class: "img-fluid" %>
+    </div>
+    <div class="col-md-8">
+      <h3><strong><%= @item.name %></strong></h3>
+      <p><%= @item.introduction %></p>
+      <p class="mt-5"><strong>¥<%= @item.tax_included_price.to_i %></strong><span style="font-size: 0.5rem;">（税込）</span></p>
+
+      <%= form_with(url: public_cart_items_path, method: :post) do |form| %>
+        <div class="form-row align-items-center">
+          <div class="col-sm-4 mr-3">
+            <%= form.number_field :quantity, in: 1..10, class: "form-control", style: "width: 130px;" %>
+          </div>
+          <div class="col-auto">
+              <%= form.hidden_field :item_id, value: @item.id %>
+          </div>
+          <div class="col-6 ml-2">
+            <%= form.submit "カートに入れる", class: "btn btn-primary" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

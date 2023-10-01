@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   namespace :public do
-    
+
     resources :items, only: [:index, :show], controller: 'items'
-    
+
+    resources :cart_items, only: [:index, :update, :destroy, :create] do
+      collection do
+        delete 'destroy_all'
+      end
+    end
+
     resources :orders do
       collection do
         post 'confirm_order'
