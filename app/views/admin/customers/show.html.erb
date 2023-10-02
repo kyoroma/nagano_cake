@@ -1,2 +1,46 @@
-<h1>Admin::Customers#show</h1>
-<p>Find me in app/views/admin/customers/show.html.erb</p>
+<style>
+  h3 {
+    background-color: #E5E8E8;
+    padding: 0 20px;
+  }
+
+</style>
+
+<%= render partial: 'admin/shared/header' %>
+
+<div class="container mt-4" style="margin-left: 100px;">
+  <h3 style="display: inline-block;"><%= @customer.full_name %> さんの会員詳細</h3>
+
+  <div class="row mt-4">
+    <div class="col-sm-2">会員ID</div>
+    <div class="col-sm-9"><%= @customer.id %></div>
+
+    <div class="col-sm-2 mt-3">氏名</div>
+    <div class="col-sm-9 mt-3"><%= @customer.last_name %> <%= @customer.first_name %></div>
+
+    <div class="col-sm-2 mt-3">フリガナ</div>
+    <div class="col-sm-9 mt-3"><%= @customer.last_name_kana %> <%= @customer.first_name_kana %></div>
+
+    <div class="col-sm-2 mt-3">郵便番号</div>
+    <div class="col-sm-9 mt-3"><%= @customer.postal_code %></div>
+
+    <div class="col-sm-2 mt-3">住所</div>
+    <div class="col-sm-9 mt-3"><%= @customer.address %></div>
+
+    <div class="col-sm-2 mt-3">電話番号</div>
+    <div class="col-sm-9 mt-3"><%= @customer.phone_number %></div>
+
+    <div class="col-sm-2 mt-3">メールアドレス</div>
+    <div class="col-sm-9 mt-3"><%= @customer.email %></div>
+  </div>
+
+  <div class="row mt-4" style="white-space: nowrap;">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+      <%= link_to "編集する", edit_admin_customer_path(@customer), class: "btn btn-success" %>
+    </div>
+    <div class="col-sm-3 text-left">
+      <%= link_to "注文履歴一覧を見る", admin_root_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
