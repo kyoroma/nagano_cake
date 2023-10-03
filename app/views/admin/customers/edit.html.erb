@@ -1,2 +1,110 @@
-<h1>Admin::Customers#edit</h1>
-<p>Find me in app/views/admin/customers/edit.html.erb</p>
+<style>
+  h3 {
+    padding: 0 20px;
+    background-color: #E5E8E8;
+  } 
+</style>
+
+<%= render partial: 'admin/shared/header' %>
+
+<div class="container mt-4 mx-auto">
+  <h3 style="display: inline-block;"><%= @customer.full_name %> さんの会員情報編集</h3>
+
+  <%= form_with(model: [:admin, @customer], local: true) do |form| %>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-sm-3" style="white-space: nowrap;">会員ID</div>
+        <div class="col-sm-9"><%= @customer.id %></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-xs-12">
+          <%= form.label :last_name, "氏名", class: "mt-2" %>
+        </div>
+        <div class="col-sm-9 col-xs-12">
+          <div class="form-inline align-items-center">
+            <%= form.text_field :last_name, class: 'form-control mr-5' %>
+            <%= form.text_field :first_name, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-xs-12">
+          <%= form.label :last_name_kana, "フリガナ", class: 'mt-2' %>
+        </div>
+        <div class="col-sm-9 col-xs-12">
+          <div class="form-inline align-items-center">
+            <%= form.text_field :last_name_kana, class: 'form-control mr-5' %>
+            <%= form.text_field :first_name_kana, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-xs-12">
+          <%= form.label :postal_code, "郵便番号", class: 'mt-2' %>
+        </div>
+        <div class="col-sm-9 col-xs-12">
+          <div class="form-inline align-items-center">
+            <%= form.text_field :postal_code, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-xs-12">
+          <%= form.label :address, "住所", class: 'mt-2' %>
+        </div>
+        <div class="col-sm-9 col-xs-12">
+          <%= form.text_field :address, class: 'form-control' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-xs-12">
+          <%= form.label :phone_number, "電話番号", class: 'mt-2' %>
+        </div>
+        <div class="col-sm-9 col-xs-12">
+          <div class="form-inline align-items-center">
+            <%= form.text_field :phone_number, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-2">
+        <div class="col-sm-3 col-xs-12">
+          <%= form.label :email, "メールアドレス", class: 'mt-2', style: 'display: white-space: nowrap;' %>
+        </div>
+        <div class="col-sm-9 col-xs-12">
+          <div class="form-inline align-items-center">
+            <%= form.text_field :email, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-3">
+        <div class="col-sm-3 col-xs-12"></div>
+        <div class="col-sm-9 col-xs-12 mb-5">
+          <div class="form-inline align-items-center">
+            <%= form.submit '変更を保存', class: 'btn btn-success', style: 'padding-right: 20px; padding-left: 20px;' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
