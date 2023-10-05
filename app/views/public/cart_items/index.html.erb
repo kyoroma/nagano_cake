@@ -1,0 +1,72 @@
+<style>
+  .custom-table {
+    border-collapse: collapse;
+    width: 90%;
+  }
+
+  .custom-table th, .custom-table td {
+    border: 1px solid #000;
+  }
+
+  th {
+    background-color: #E5E8E8;
+  }
+  
+  tr {
+    border: 1px solid #000;
+  }
+</style>
+
+<%= render partial: 'public/shared/header' %>
+
+<div class="container mt-5" style="display: inline-block; white-space: nowrap;">
+  <h3>ショッピングカート</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <table class="table table-bordeblack custom-table">
+          <thead>
+            <tr>
+              <th scope="col">商品名</th>
+              <th scope="col">単価(税込)</th>
+              <th scope="col">数量</th>
+              <th scope="col">小計</th>
+              <th scope="col"></th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @cart_items.each do |cart_item| %>
+              <tr>
+                <td><%= cart_item.item.name %></td>
+                <td><%= cart_item.item.price * 1.1 %></td>
+                <td><%= cart_item.amount %></td>
+                <td><%= cart_item.item.price * 1.1 * cart_item.amount %></td>
+                <td></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-5" >
+          <%= link_to '買い物を続ける', root_path, class: 'btn btn-primary mt-2 ', style: 'height: 40px;' %>
+        </div>
+        <div class="col-1 mr-5"></div>
+        <div class="col-2 mr-3"></div>
+        <div class="col-3 pl-0">
+          <table class="table table-bordered custom-table" style="width: auto;">
+            <tbody>
+              <tr>
+                <th style="display: inline-block; white-space: nowrap;">合計金額</th>
+                <td><%= @total_price %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

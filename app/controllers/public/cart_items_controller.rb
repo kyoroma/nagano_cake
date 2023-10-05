@@ -2,7 +2,8 @@ class Public::CartItemsController < ApplicationController
   before_action :authenticate_customer!
 
   def index
-    @cart_items = current_customer.cart_itemsincludes(:item)
+    @cart_items = current_customer.cart_items.includes(:item)
+    @total_price = @cart_items.inject(0) { |sum, item| sum + item.item.tax_included_price * item.amount }
   end
 
   def update
@@ -13,7 +14,7 @@ class Public::CartItemsController < ApplicationController
       render :index
     end
   end
-  
+
   def destroy
     @cart_item = CartItem.find(params[:id])
     @cart_item.destroy
@@ -26,19 +27,25 @@ class Public::CartItemsController < ApplicationController
   end
 
   def create
-    @cart_item = CartItem.new(cart_item_params)
-    @cart_item.customer = current_customer
+    @item = Item.find_by(id: params[:item_id])
 
-    if @cart_item.save
-      redirect_to public_cart_items_path, notice: 'カートに商品を追加しました。'
+    if @item
+      @cart_item = CartItem.new(cart_item_params)
+      @cart_item.customer = current_customer
+
+      if @cart_item.save
+        redirect_to public_cart_items_path, notice: 'カートに商品を追加しました。'
+      else
+        render 'public/items/show'
+      end
     else
-      render 'public/items/show'
+      redirect_to public_items_path, alert: '商品が見つかりませんでした。'
     end
   end
-  
+
   private
 
   def cart_item_params
-    params.require(:cart_item).permit(:item_id, :quantity)
+    params.permit(:item_id, :amount)
   end
 end

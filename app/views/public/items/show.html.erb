@@ -10,16 +10,14 @@
       <p><%= @item.introduction %></p>
       <p class="mt-5"><strong>¥<%= @item.tax_included_price.to_i %></strong><span style="font-size: 0.5rem;">（税込）</span></p>
 
-      <%= form_with(url: public_cart_items_path, method: :post) do |form| %>
+      <%= form_with model: @cart_item, url: public_cart_items_path do |f| %>
         <div class="form-row align-items-center">
           <div class="col-sm-4 mr-3">
-            <%= form.number_field :quantity, in: 1..10, class: "form-control", style: "width: 130px;" %>
-          </div>
-          <div class="col-auto">
-              <%= form.hidden_field :item_id, value: @item.id %>
+            <%= f.select :amount, options_for_select((1..10).to_a), {}, class: "form-control", style: "width: 130px;" %>
+            <%= f.hidden_field :item_id, value: @item.id %>
           </div>
           <div class="col-6 ml-2">
-            <%= form.submit "カートに入れる", class: "btn btn-primary" %>
+            <%= f.submit "カートに入れる", class: "btn btn-primary" %>
           </div>
         </div>
       <% end %>
