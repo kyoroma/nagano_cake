@@ -11,6 +11,7 @@ class Public::CartItemsController < ApplicationController
     if @cart_item.update(cart_item_params)
       redirect_to public_cart_items_path, notice: 'カート内商品を更新しました。'
     else
+      @cart_items = current_customer.cart_items
       render :index
     end
   end
