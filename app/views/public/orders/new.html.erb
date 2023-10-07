@@ -1,2 +1,46 @@
-<h1>Public::Orders#new</h1>
-<p>Find me in app/views/public/orders/new.html.erb</p>
+<%= render partial: 'public/shared/header' %>
+
+<div class="container">
+  <h3>注文情報入力</h3>
+  <%= form_with model: @order, url: public_orders_path, local: true do |f| %>
+  
+    <div class="form-group">
+      <h3>支払方法</h3>
+      <%= f.radio_button :payment_method, "credit_card" %>
+      <%= f.label :payment_method_credit_card, "クレジットカード" %>
+      <%= f.radio_button :payment_method, "transfer" %>
+      <%= f.label :payment_method_transfer, "銀行振込" %>
+    </div>
+    
+    <div class="form-group">
+      <h3>お届け先</h3>
+      <%= f.radio_button :address_type, "self", checked: true %>
+      <%= f.label :address_type_self, "ご自身の住所" %>
+      <%= f.radio_button :address_type, "registered" %>
+      <%= f.label :address_type_registered, "登録済み住所から選択" %>
+      <%= f.radio_button :address_type, "new" %>
+      <%= f.label :address_type_new, "新しいお届け先" %>
+    </div>
+    
+    <div class="form-group" id="self-address" style="display: block;">
+      <%= f.label :self_address, "住所" %>
+      <%= f.text_field :self_address, class: "form-control" %>
+    </div>
+    
+    <div class="form-group" id="registered-address" style="display: none;">
+      <%= f.label :registered_address_id, "登録済み住所から選択" %>
+      <%= f.select :registered_address_id, options_from_collection_for_select(current_customer.addresses, :id, :address_display), include_blank: true, class: "form-control" %>
+    </div>
+    
+    <div class="form-group" id="new-address" style="display: none;">
+      <%= f.label :new_address, "住所" %>
+      <%= f.text_field :new_address, class: "form-control" %>
+      <%= f.label :new_postal_code, "郵便番号" %>
+      <%= f.text_field :new_postal_code, class: "form-control" %>
+      <%= f.label :new_name, "宛名" %>
+      <%= f.text_field :new_name, class: "form-control" %>
+    </div>
+    
+    <%= f.submit "注文情報を確認する", class: "btn btn-primary" %>
+  <% end %>
+</div>

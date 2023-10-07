@@ -8,7 +8,7 @@
     <div class="col-md-8">
       <h3><strong><%= @item.name %></strong></h3>
       <p><%= @item.introduction %></p>
-      <p class="mt-5"><strong>¥<%= @item.tax_included_price.to_i %></strong><span style="font-size: 0.5rem;">（税込）</span></p>
+      <p class="mt-5"><strong>¥<%= @item.with_tax_price %></strong><span style="font-size: 0.5rem;">（税込）</span></p>
 
       <%= form_with model: @cart_item, url: public_cart_items_path do |f| %>
         <div class="form-row align-items-center">
@@ -17,7 +17,7 @@
             <%= f.hidden_field :item_id, value: @item.id %>
           </div>
           <div class="col-6 ml-2">
-            <%= f.submit "カートに入れる", class: "btn btn-primary" %>
+            <%= f.submit "カートに入れる", class: "btn btn-success" %>
           </div>
         </div>
       <% end %>

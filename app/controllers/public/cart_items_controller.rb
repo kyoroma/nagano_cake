@@ -3,7 +3,7 @@ class Public::CartItemsController < ApplicationController
 
   def index
     @cart_items = current_customer.cart_items.includes(:item)
-    @total_price = @cart_items.inject(0) { |sum, item| sum + item.item.tax_included_price * item.amount }
+    @total_price = @cart_items.inject(0) { |sum, item| sum + item.item.tax_excluded_price * item.amount }
   end
 
   def update
@@ -29,8 +29,19 @@ class Public::CartItemsController < ApplicationController
 
   def create
     @item = Item.find_by(id: params[:item_id])
+    @cart_item = current_customer.cart_items.find_by(item: @item)
 
-    if @item
+    if @cart_item
+      # 既にカートに存在する場合
+      new_amount = @cart_item.amount + cart_item_params[:amount].to_i
+      if @cart_item.update(amount: new_amount)
+        redirect_to public_cart_items_path, notice: 'カート内の商品数量を更新しました。'
+      else
+        # 更新に失敗した場合の処理
+        render 'public/items/show'
+      end
+    else
+      # カートに存在しない場合
       @cart_item = CartItem.new(cart_item_params)
       @cart_item.customer = current_customer
 
@@ -39,8 +50,6 @@ class Public::CartItemsController < ApplicationController
       else
         render 'public/items/show'
       end
-    else
-      redirect_to public_items_path, alert: '商品が見つかりませんでした。'
     end
   end
 
