@@ -3,7 +3,9 @@ class Public::CartItemsController < ApplicationController
 
   def index
     @cart_items = current_customer.cart_items.includes(:item)
-    @total_price = @cart_items.inject(0) { |sum, item| sum + item.item.tax_excluded_price * item.amount }
+    @cart_items.each do |cart_item|
+      cart_item.total_price = cart_item.item.with_tax_price * cart_item.amount
+    end
   end
 
   def update

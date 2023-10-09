@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_07_141702) do
+ActiveRecord::Schema.define(version: 2023_10_09_095950) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2023_10_07_141702) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "customer_id", null: false
+    t.string "postal_code"
     t.index ["customer_id"], name: "index_addresses_on_customer_id"
   end
 
@@ -108,7 +109,7 @@ ActiveRecord::Schema.define(version: 2023_10_07_141702) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "shipping_fee", null: false
+    t.integer "shipping_fee", default: 800, null: false
     t.integer "payment_method", null: false
     t.integer "total_price", null: false
     t.string "name", null: false
@@ -116,6 +117,12 @@ ActiveRecord::Schema.define(version: 2023_10_07_141702) do
     t.string "postal_code", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "address_id", null: false
+    t.string "address_type"
+    t.string "new_postal_code"
+    t.string "new_address"
+    t.string "new_name"
+    t.index ["address_id"], name: "index_orders_on_address_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -123,4 +130,5 @@ ActiveRecord::Schema.define(version: 2023_10_07_141702) do
   add_foreign_key "addresses", "customers"
   add_foreign_key "cart_items", "customers"
   add_foreign_key "cart_items", "items"
+  add_foreign_key "orders", "addresses"
 end
