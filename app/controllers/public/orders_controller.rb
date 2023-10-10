@@ -9,11 +9,17 @@ class Public::OrdersController < ApplicationController
     @order.postal_code = current_customer.postal_code
     @order.address = current_customer.address
     @order.name = current_customer.full_name
+    @order.total_price = calculate_total_price(@cart_items)
+    @order.shipping_fee = 800
 
     if params[:order][:address_id].present?
       @address = Address.find(params[:order][:address_id])
+      @order.postal_code = @address.postal_code
+      @order.address = @address.address
+      @order.name = @address.name
     else
       @address = Address.new(
+        customer_id: current_customer.id,
         postal_code: params[:order][:postal_code],
         address: params[:order][:address].to_s,
         name: params[:order][:name]
@@ -21,11 +27,26 @@ class Public::OrdersController < ApplicationController
 
       if @address.save
         flash[:success] = "新しいお届け先が保存されました。"
-        redirect_to confirm_order_public_orders_path
+        @order.postal_code = @address.postal_code
+        @order.address = @address.address
+        @order.name = @address.name
       else
         flash[:error] = "お届け先の保存に失敗しました。エラーメッセージを確認してください。"
         render :confirm_order
       end
+    end
+
+    if @order.address_type == 'self'
+      # ご自身の住所を設定
+      @order.address = current_customer.address
+      @order.postal_code = current_customer.postal_code
+      @order.name = current_customer.full_name
+    elsif @order.address_type == 'registered' && @order.address_id.present?
+      # 登録済みの住所を設定
+      selected_address = Address.find(@order.address_id)
+      @order.address = selected_address.address
+      @order.postal_code = selected_address.postal_code
+      @order.name = selected_address.name
     end
   end
 
