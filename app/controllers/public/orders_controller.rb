@@ -58,6 +58,15 @@ class Public::OrdersController < ApplicationController
     @order.shipping_fee = 800
 
     if @order.save
+      current_customer.cart_items.each do |item|
+        OrderItem.create!(
+          order_id: @order.id,
+          item_id: item.item_id,
+          amount: item.quantity,
+          final_price: item.item.price
+        )
+      end
+      @order.confirmed!
       redirect_to order_completed_public_orders_path
     else
       render :new
@@ -65,11 +74,11 @@ class Public::OrdersController < ApplicationController
   end
 
   def index
-    @orders = Order.all
+     @orders = current_customer.orders.order(created_at: :desc)
   end
 
   def show
-    @order = Order.find_by(id: params[:id])
+    @order = current_customer.orders.find_by(id: params[:id])
   end
 
   private
