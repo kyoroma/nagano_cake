@@ -62,84 +62,99 @@
     <div class="col"></div>
   </div>
 
-  <div class="container pr-0 mt-3" style="display: inline-block; white-space: nowrap;">
-    <div class="row">
-      <div class="col">
-        <table class="table custom-table equal-height-table">
-          <thead>
-            <tr>
-              <th>商品名</th>
-              <th>単価(税込)</th>
-              <th>数量</th>
-              <th>小計</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @cart_items.each do |cart_item| %>
-              <tr>
-                <td>
-                  <%= image_tag cart_item.item.image, class: 'page-specific-image mr-3' %>
-                  <%= cart_item.item.name %>
-                </td>
-                <td><%= cart_item.item.with_tax_price %></td>
-                <td><%= cart_item.amount %></td>
-                <td><%= cart_item.subtotal %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-      <div class="col">
-        <table class="equal-height-table">
-          <tr>
-            <th class="pr-5">送料</th>
-            <td class="pr-5"><%= @order.shipping_fee %></td>
-          </tr>
-          <tr>
-            <th class="pr-5">商品合計</th>
-            <td class="pr-5"><%= @order.total_price %></td>
-          </tr>
-          <tr>
-            <th class="pr-5">請求金額</th>
-            <td class="pr-5"><%= @order.total_price + @order.shipping_fee %></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
+  <%= form_with(model: @order, url: place_order_public_orders_path, method: :post, local: false) do |form| %>
+    <%= form.hidden_field :shipping_fee, value: @order.shipping_fee %>
+    <%= form.hidden_field :total_price, value: @order.total_price %>
+    <%= form.hidden_field :payment_method, value: @order.payment_method %>
+    <%= form.hidden_field :address_type, value: @order.address_type %>
+    <%= form.hidden_field :address_id, value: @order.address_id %>
+    <%= form.hidden_field :postal_code, value: @order.postal_code %>
+    <%= form.hidden_field :address, value: @order.address %>
+    <%= form.hidden_field :name, value: @order.name %>
 
-  <div class="address-container mt-4">
-    <div class="mr-3">
-      <p>支払方法</p>
-    </div>
-    <div class="address-details">
-      <%= t("enums.order.payment_method.#{@order.payment_method}") %>
-    </div>
-  </div>
-  <div class="address-container">
-    <div class="mr-3">
-      <p>お届け先</p>
-    </div>
-    <div class="address-details">
-      <% if @order.address_type == 'self' %>
-        <div class="address-info">
-          <p>〒<%= @order.postal_code %><%= @order.address %>
-          <br><%= @order.name %></p>
+    <div class="container pr-0 mt-3" style="display: inline-block; white-space: nowrap;">
+      <div class="row">
+        <div class="col">
+          <table class="table custom-table equal-height-table">
+            <thead>
+              <tr>
+                <th>商品名</th>
+                <th>単価(税込)</th>
+                <th>数量</th>
+                <th>小計</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @cart_items.each do |cart_item| %>
+                <%= form.fields_for :cart_items, cart_item do |cart_item_form| %>
+                  <%= cart_item_form.hidden_field :item_id, value: cart_item.item.id %>
+                  <%= cart_item_form.hidden_field :amount, value: cart_item.amount %>
+                  <tr>
+                    <td>
+                      <%= image_tag cart_item.item.image, class: 'page-specific-image mr-3' %>
+                      <%= cart_item.item.name %>
+                    </td>
+                    <td><%= cart_item.item.with_tax_price %></td>
+                    <td><%= cart_item.amount %></td>
+                    <td><%= cart_item.subtotal %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
         </div>
-      <% elsif @order.address_type == 'registered' && @order.address_id.present? %>
-        <div class="address-info">
-          <p>〒<%= @order.postal_code %><%= @order.address %>
-          <br><%= @order.name %></p>
+        <div class="col">
+          <table class="equal-height-table">
+            <tr>
+              <th class="pr-5">送料</th>
+              <td class="pr-5"><%= @order.shipping_fee %></td>
+            </tr>
+            <tr>
+              <th class="pr-5">商品合計</th>
+              <td class="pr-5"><%= @order.total_price %></td>
+            </tr>
+            <tr>
+              <th class="pr-5">請求金額</th>
+              <td class="pr-5"><%= @order.total_price + @order.shipping_fee %></td>
+            </tr>
+          </table>
         </div>
-      <% elsif @order.address_type == 'new' %>
-        <div class="address-info">
-          <p>〒<%= @order.postal_code %><%= @order.address %>
-          <br><%= @order.name %></p>
-        </div>
-      <% end %>
+      </div>
     </div>
-  </div>
-  <div class="text-center mt-4">
-    <%= link_to '注文を確定する', order_completed_public_orders_path, class: 'btn btn-success', style: 'padding-left: 20px; padding-right: 20px;' %>
-  </div>
+
+    <div class="address-container mt-4">
+      <div class="mr-3">
+        <p>支払方法</p>
+      </div>
+      <div class="address-details">
+        <%= t("enums.order.payment_method.#{@order.payment_method}") %>
+      </div>
+    </div>
+    <div class="address-container">
+      <div class="mr-3">
+        <p>お届け先</p>
+      </div>
+      <div class="address-details">
+        <% if @order.address_type == 'self' %>
+          <div class="address-info">
+            <p>〒<%= @order.postal_code %><%= @order.address %>
+            <br><%= @order.name %></p>
+          </div>
+        <% elsif @order.address_type == 'registered' && @order.address_id.present? %>
+          <div class="address-info">
+            <p>〒<%= @order.postal_code %><%= @order.address %>
+            <br><%= @order.name %></p>
+          </div>
+        <% elsif @order.address_type == 'new' %>
+          <div class="address-info">
+            <p>〒<%= @order.postal_code %><%= @order.address %>
+            <br><%= @order.name %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <%= form.submit '注文を確定する', class: 'btn btn-success', style: 'padding-left: 20px; padding-right: 20px;' %>
+    </div>
+  <% end %>
 </div>

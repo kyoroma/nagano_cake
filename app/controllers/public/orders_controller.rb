@@ -58,15 +58,16 @@ class Public::OrdersController < ApplicationController
     @order.shipping_fee = 800
 
     if @order.save
-      current_customer.cart_items.each do |item|
+       params[:order][:cart_items].each do |item|
         OrderItem.create!(
-          order_id: @order.id,
-          item_id: item.item_id,
-          amount: item.quantity,
-          final_price: item.item.price
+          order_id: @order,
+          item_id: item[:item_id],
+          amount: item[:amount],
+          final_price: Item.find(item[:item_id]).price
         )
       end
-      @order.confirmed!
+      current_customer.cart_items.destroy_all
+
       redirect_to order_completed_public_orders_path
     else
       render :new
@@ -84,7 +85,10 @@ class Public::OrdersController < ApplicationController
   private
 
   def order_params
-     params.require(:order).permit(:customer_id, :shipping_fee, :payment_method, :total_price, :name, :address, :postal_code, :address_id, :address_type)
+    params.require(:order).permit(
+    :shipping_fee, :total_price, :payment_method, :address_type, :address_id, :postal_code, :address, :name,
+    cart_items: [:item_id, :amount]  # cart_items内のパラメータを許可
+  )
   end
 
   def calculate_total_price(cart_items)
