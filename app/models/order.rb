@@ -1,6 +1,5 @@
 class Order < ApplicationRecord
-  belongs_to :customer
-  has_many :cart_items
+ belongs_to :customer
   has_many :order_items, dependent: :destroy
   has_one :shipping_address, class_name: 'Address'
 
@@ -9,10 +8,20 @@ class Order < ApplicationRecord
 
   validates :shipping_fee, :payment_method, :total_price, :name, :address, :postal_code, presence: true
 
-  def confirmed!
-    update(status: :confirmed)
-    # ここで確定後の処理を実装する（例: 通知の送信、在庫の更新など）
+  def save_order_information(customer, shipping_address, payment_method, shipping_fee)
+    self.customer = customer
+    self.shipping_address = shipping_address
+    self.payment_method = payment_method
+    self.shipping_fee = shipping_fee
+    self.total_price = calculate_total_price
+    self.status = :confirmed
+
+    self.save
     clear_cart_items
+  end
+
+  def calculate_total_price
+    cart_items.sum { |cart_item| cart_item.subtotal } + shipping_fee
   end
 
   def clear_cart_items

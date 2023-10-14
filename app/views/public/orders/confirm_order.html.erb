@@ -62,12 +62,12 @@
     <div class="col"></div>
   </div>
 
-  <%= form_with(model: @order, url: place_order_public_orders_path, method: :post, local: false) do |form| %>
+  <%= form_with(model: @order, url: place_order_public_orders_path, method: :post, local: true) do |form| %>
     <%= form.hidden_field :shipping_fee, value: @order.shipping_fee %>
     <%= form.hidden_field :total_price, value: @order.total_price %>
     <%= form.hidden_field :payment_method, value: @order.payment_method %>
     <%= form.hidden_field :address_type, value: @order.address_type %>
-    <%= form.hidden_field :address_id, value: @order.address_id %>
+    <%= form.hidden_field :address_id, value: "1" %>
     <%= form.hidden_field :postal_code, value: @order.postal_code %>
     <%= form.hidden_field :address, value: @order.address %>
     <%= form.hidden_field :name, value: @order.name %>
@@ -86,9 +86,9 @@
             </thead>
             <tbody>
               <% @cart_items.each do |cart_item| %>
-                <%= form.fields_for :cart_items, cart_item do |cart_item_form| %>
-                  <%= cart_item_form.hidden_field :item_id, value: cart_item.item.id %>
-                  <%= cart_item_form.hidden_field :amount, value: cart_item.amount %>
+                <%#= form.fields_for :cart_items, cart_item do |cart_item_form| %>
+                  <%#= cart_item_form.hidden_field :item_id, value: cart_item_form.object.item_id %>
+                  <%#= cart_item_form.hidden_field :amount, value: cart_item_form.object.amount %>
                   <tr>
                     <td>
                       <%= image_tag cart_item.item.image, class: 'page-specific-image mr-3' %>
@@ -98,7 +98,7 @@
                     <td><%= cart_item.amount %></td>
                     <td><%= cart_item.subtotal %></td>
                   </tr>
-                <% end %>
+                <%# end %>
               <% end %>
             </tbody>
           </table>

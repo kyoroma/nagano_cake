@@ -26,7 +26,7 @@
     width: 70px;
     height: 50px;
   }
-  
+
   .custom-table thead th {
     vertical-align: bottom;
     border-bottom: 1px solid #000;
@@ -68,7 +68,7 @@
                   </td>
                   <td style="vertical-align: middle;"><%= cart_item.item.with_tax_price %></td>
                   <td class="p-0" style="vertical-align: middle;">
-                    <%= form_with(model: cart_item, url: public_cart_item_path(cart_item), local: true, method: :put) do |f| %>
+                    <%= form_with(model: cart_item, url: public_cart_item_path(cart_item), local: true, method: :patch) do |f| %>
                       <div class="d-flex justify-content-center">
                         <div class="mr-2 mt-1">
                           <%= f.select :amount, options_for_select((1..10).to_a, cart_item.amount), {}, class: 'form-control form-control-sm' %>

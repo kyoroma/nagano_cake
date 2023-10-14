@@ -3,9 +3,6 @@ class Public::CartItemsController < ApplicationController
 
   def index
     @cart_items = current_customer.cart_items.includes(:item)
-    @cart_items.each do |cart_item|
-      cart_item.total_price = cart_item.item.with_tax_price * cart_item.amount
-    end
   end
 
   def update
@@ -30,9 +27,10 @@ class Public::CartItemsController < ApplicationController
   end
 
   def create
-    @item = Item.find_by(id: params[:item_id])
-    @cart_item = current_customer.cart_items.find_by(item: @item)
 
+    @item = Item.find_by(id: params[:cart_item][:item_id])
+    @cart_item = current_customer.cart_items.find_by(item_id: @item.id)
+    #byebug
     if @cart_item
       # 既にカートに存在する場合
       new_amount = @cart_item.amount + cart_item_params[:amount].to_i
@@ -44,10 +42,9 @@ class Public::CartItemsController < ApplicationController
       end
     else
       # カートに存在しない場合
-      @cart_item = CartItem.new(cart_item_params)
-      @cart_item.customer = current_customer
+      cart_item = current_customer.cart_items.new(cart_item_params)
 
-      if @cart_item.save
+      if cart_item.save!
         redirect_to public_cart_items_path, notice: 'カートに商品を追加しました。'
       else
         render 'public/items/show'
@@ -58,6 +55,6 @@ class Public::CartItemsController < ApplicationController
   private
 
   def cart_item_params
-    params.permit(:item_id, :amount)
+    params.require(:cart_item).permit(:item_id, :amount)
   end
 end

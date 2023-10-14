@@ -54,24 +54,35 @@ class Public::OrdersController < ApplicationController
   end
 
   def place_order
-    @order = Order.new(order_params)
-    @order.shipping_fee = 800
+    #customer = current_customer
+    #address_id = params[:order][:address_id]
 
-    if @order.save
-       params[:order][:cart_items].each do |item|
-        OrderItem.create!(
-          order_id: @order,
-          item_id: item[:item_id],
-          amount: item[:amount],
-          final_price: Item.find(item[:item_id]).price
-        )
-      end
-      current_customer.cart_items.destroy_all
+    #if address_id.present?
+      #shipping_address = Address.find(address_id)
+    #else
+     # flash[:error] = "アドレスが見つかりません。正しいアドレスを選択または入力してください。"
+      #redirect_to order_completed_public_orders_path
+      #return
+    #end
 
-      redirect_to order_completed_public_orders_path
-    else
-      render :new
+    #payment_method = params[:order][:payment_method].to_sym
+    #shipping_fee = 800
+    @order = current_customer.orders.new(order_params)
+    @order.save!
+    #order.save_order_information(customer, shipping_address, payment_method, shipping_fee)
+
+    # カートアイテムを一つずつ処理
+    current_customer.cart_items.each do |cart_item|
+      @order.order_items.create(
+        item: cart_item.item,
+        amount: cart_item.amount,
+        final_price: cart_item.item.with_tax_price
+      )
+      # カートアイテムを削除
     end
+    current_customer.cart_items.destroy_all
+
+    redirect_to order_completed_public_orders_path
   end
 
   def index
@@ -85,10 +96,7 @@ class Public::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(
-    :shipping_fee, :total_price, :payment_method, :address_type, :address_id, :postal_code, :address, :name,
-    cart_items: [:item_id, :amount]  # cart_items内のパラメータを許可
-  )
+    params.require(:order).permit(:shipping_fee, :total_price, :payment_method, :address_type, :address_id, :postal_code, :address, :name)
   end
 
   def calculate_total_price(cart_items)
