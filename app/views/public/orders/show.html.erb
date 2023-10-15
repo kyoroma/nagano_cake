@@ -1,33 +1,99 @@
+<style>
+   h4 {
+    padding: 0 20px;
+    background-color: #E5E8E8;
+  }
+
+  .table thead th {
+    border: 1px solid #000;
+  }
+
+  th {
+    border: 1px solid #000 !important;
+    font-size: 12px;
+    background-color: #E5E8E8;
+  }
+
+  td {
+    border: 1px solid #000 !important;
+    font-size: 12px;
+  }
+</style>
+
 <%= render partial: 'public/shared/header' %>
 
-<h3 class="mt-3" style="display: inline-block;">注文詳細</h3>
 <div class="container">
-  <p><strong>注文日時:</strong> <%= @order.created_at %></p>
-  <p><strong>注文者:</strong> <%= @order.customer.full_name %></p>
-  <p><strong>合計金額:</strong> <%= @order.total_price %> 円</p>
-  <p><strong>お届け先:</strong> <%= @order.name %>, <%= @order.postal_code %>, <%= @order.address %></p>
-  <p><strong>支払方法:</strong> <%= @order.payment_method %></p>
-  <p><strong>送料:</strong> <%= @order.shipping_fee %> 円</p>
-
-  <h4>注文内容</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>商品名</th>
-        <th>価格</th>
-        <th>数量</th>
-        <th>小計</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @order.order_items.each do |order_item| %>
+  <h4 class="mt-3 ml-5" style="display: inline-block;">注文履歴詳細</h4>
+  <div class="row">
+    <div class="col-md-7">
+      <p><strong>注文情報</strong></p>
+      <table class="table custom-table equal-height-table">
         <tr>
-          <td><%= order_item.item.name %></td>
-          <td><%= order_item.item.price %> 円</td>
-          <td><%= order_item.amount %></td>
-          <td><%= order_item.final_price %> 円</td>
+          <th class="pr-5" style="white-space: nowrap;">注文日</th>
+          <td class="pr-5"><%= @order.created_at.strftime('%Y/%m/%d') %></td>
         </tr>
+        <tr>
+          <th class="pr-5" style="white-space: nowrap;">配送先</th>
+          <td class="pr-5">
+            〒<%= @order.postal_code %><br>
+            <%= @order.address %><br>
+            <%= @order.name %>
+          </td>
+        </tr>
+        <tr>
+          <th class="pr-5" style="white-space: nowrap;">支払方法</th>
+          <td class="pr-5"><%= t("enums.order.payment_method.#{@order.payment_method}") %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-md-3 pl-0">
+      <p style="white-space: nowrap;"><strong>請求情報</strong></p>
+      <% total_price = 0 %>
+      <% @order.order_items.each do |order_item| %>
+        <% total_price += order_item.final_price * order_item.amount %>
       <% end %>
-    </tbody>
-  </table>
+      <table class="table custom-table equal-height-table">
+        <tr>
+          <th class="pr-5" style="white-space: nowrap;">商品合計</th>
+          <td class="pr-5"><%= total_price %></td>
+        </tr>
+        <tr>
+          <th class="pr-5" style="white-space: nowrap;">配送料</th>
+          <td class="pr-5"><%= @order.shipping_fee %></td>
+        </tr>
+        <tr>
+          <th class="pr-5" style="white-space: nowrap;">請求金額</th>
+          <td class="pr-5"><%= total_price + @order.shipping_fee %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 pl-0">
+        <table class="table custom-table equal-height-table">
+          <thead>
+            <tr>
+              <th style="white-space: nowrap;">商品</th>
+              <th style="white-space: nowrap;">単価(税込)</th>
+              <th style="white-space: nowrap;">個数</th>
+              <th style="white-space: nowrap;">小計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @order_items.each do |order_item| %>
+              <tr>
+                <td style="white-space: nowrap;"><%= order_item.item.name %></td>
+                <td style="white-space: nowrap;"><%= order_item.item.with_tax_price %></td>
+                <td style="white-space: nowrap;"><%= order_item.amount %></td>
+                <td style="white-space: nowrap;"><%= order_item.subtotal %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
+

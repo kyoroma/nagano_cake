@@ -91,6 +91,7 @@ class Public::OrdersController < ApplicationController
 
   def show
     @order = current_customer.orders.find_by(id: params[:id])
+    @order_items = @order.order_items
   end
 
   private
