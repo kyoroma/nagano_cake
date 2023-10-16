@@ -2,12 +2,12 @@
   h3 {
     padding: 0 20px;
     background-color: #E5E8E8;
-  } 
+  }
 </style>
 
 <%= render partial: 'admin/shared/header' %>
 
-<div class="container mt-4 mx-auto">
+<div class="container mt-4 ml-5">
   <h3 style="display: inline-block;"><%= @customer.full_name %> さんの会員情報編集</h3>
 
   <%= form_with(model: [:admin, @customer], local: true) do |form| %>

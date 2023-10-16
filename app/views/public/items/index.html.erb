@@ -1,15 +1,17 @@
 <%= render partial: 'public/shared/header' %>
 
-<div class="container mt-5">
-  <h3><strong>商品一覧</strong><span style="font-size: 0.95rem; margin-left: 10px;">(全<%= @items.count %>件)</span></h3>
-  <div class="row mt-3">
-    <% @items.each do |item| %>
-      <div class="col-md-3">
-        <%= image_tag item.image, class: "img-fluid" %>
-        <p class="mt-2"><strong><%= link_to item.name, public_item_path(item) %></strong></p>
-        <p>¥<%= item.price.to_i.to_s(:delimited) %></p>
-      </div>
-    <% end %>
+<div class="container mt-4 ml-5">
+  <div class="container">
+    <h3><strong>商品一覧</strong><span style="font-size: 0.95rem; margin-left: 10px;">(全<%= @items.count %>件)</span></h3>
+    <div class="row mt-3">
+      <% @items.each do |item| %>
+        <div class="col-md-3">
+          <%= image_tag item.image, class: "img-fluid" %>
+          <p class="mt-2"><strong><%= link_to item.name, public_item_path(item) %></strong></p>
+          <p>¥<%= item.price.to_i.to_s(:delimited) %></p>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 

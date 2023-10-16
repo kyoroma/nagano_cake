@@ -15,7 +15,7 @@
 
 <div class="container mt-4">
   <h3 style="display: inline-block;">注文履歴詳細</h3>
-  <p class="mb-3"><strong>購入者:</strong> <%= @order.customer.full_name %></p>
+  <p class="mb-3"><strong>購入者:</strong> <%= link_to @order.customer.full_name, admin_customer_path(@order.customer) %></p>
   <p class="mb-3"><strong>注文日:</strong> <%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></p>
   <p class="mb-3"><strong>配送先:</strong> 〒<%= @order.postal_code %><%= @order.address %><%= @order.name %></p>
   <p class="mb-3"><strong>支払方法:</strong> <%= t("enums.order.payment_method.#{@order.payment_method}") %></p>
@@ -23,7 +23,7 @@
   <div class="container">
     <div class="row text-bottom">
       <div class="col-md-8 pl-0">
-        <table class="table">
+        <table class="table" style="border-bottom: 1px solid #dee2e6;">
           <thead>
             <tr>
               <th style="white-space: nowrap;">商品名</th>
