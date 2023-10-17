@@ -6,8 +6,10 @@
     <div class="row mt-3">
       <% @items.each do |item| %>
         <div class="col-md-3">
-          <%= image_tag item.image, class: "img-fluid" %>
-          <p class="mt-2"><strong><%= link_to item.name, public_item_path(item) %></strong></p>
+          <%= link_to public_item_path(item) do %>
+            <%= image_tag item.image, class: "img-fluid" %>
+          <% end %>
+          <p class="mt-2"><strong><%= item.name %></strong></p>
           <p>¥<%= item.price.to_i.to_s(:delimited) %></p>
         </div>
       <% end %>

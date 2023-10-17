@@ -8,6 +8,9 @@ class Public::CartItemsController < ApplicationController
   def update
     @cart_item = CartItem.find(params[:id])
     if @cart_item.update(cart_item_params)
+      if @cart_item.amount == 0
+        @cart_item.destroy
+      end
       redirect_to public_cart_items_path, notice: 'カート内商品を更新しました。'
     else
       @cart_items = current_customer.cart_items

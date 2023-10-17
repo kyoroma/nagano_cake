@@ -1,10 +1,7 @@
 <body>
   <style>
-    .span {
-      color: #fff;
-    }
-    
-    h2 {
+
+    h3 {
       margin: 20px 0  0 60px;
       padding: 0 20px;
       background-color: #E5E8E8;
@@ -22,7 +19,7 @@
 
   <p id="notice"></p>
     <div class="container mx-auto">
-      <h2 style="display: inline-block;">新規会員登録</h2>
+      <h3 style="display: inline-block;">新規会員登録</h3>
 
         <%= form_with(model: resource, url: registration_path(resource_name), local: true) do |f| %>
           <%= render "public/shared/error_messages", resource: resource %>

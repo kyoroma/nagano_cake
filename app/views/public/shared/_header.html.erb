@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="text-left">
       <%= link_to root_path, class: "navbar-brand" do %>
-        <h2>NaganoCake</h2>
+        <h2><span>NaganoCake</span></h2>
       <% end %>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +33,7 @@
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to public_about_path, class: "nav-link text-light" do %>
+            <%= link_to public_home_about_path, class: "nav-link text-light" do %>
               <i class="fas fa-link" aria-hidden="true"></i> About
             <% end %>
           </li>
