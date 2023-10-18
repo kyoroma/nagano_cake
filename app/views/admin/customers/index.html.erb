@@ -23,6 +23,7 @@
             <th>会員ID</th>
             <th>氏名</th>
             <th>メールアドレス</th>
+            <th>ステータス</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@
                 <%= link_to "#{customer.last_name} #{customer.first_name}", admin_customer_path(customer) %>
               </td>
               <td><%= customer.email %></td>
+              <td><%= customer.is_active ? '有効' : '退会' %></td>
             </tr>
           <% end %>
         </tbody>

@@ -4,6 +4,8 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  after_initialize :set_defaults, unless: :persisted?
+
    has_many :cart_items
    has_many :addresses
    has_many :orders
@@ -14,6 +16,10 @@ class Customer < ApplicationRecord
 
   def full_name_kana
     "#{last_name_kana} #{first_name_kana}"
+  end
+
+  def set_defaults
+    self.is_active = true if self.is_active.nil?
   end
 
   validates :password, presence: true, length: { minimum: 6 }, on: :create
