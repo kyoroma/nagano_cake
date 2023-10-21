@@ -7,7 +7,11 @@
       <% @items.each do |item| %>
         <div class="col-md-3">
           <%= link_to public_item_path(item) do %>
-            <%= image_tag item.image, class: "img-fluid" %>
+            <% if item.image.attached? %>
+              <%= image_tag item.image, class: "img-fluid" %>
+            <% else %>
+              <%= image_tag "default_image.jpg", class: "img-fluid" %>
+            <% end %>
           <% end %>
           <p class="mt-2"><strong><%= item.name %></strong></p>
           <p>¥<%= item.price.to_i.to_s(:delimited) %></p>

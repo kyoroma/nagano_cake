@@ -24,63 +24,17 @@
     <div class="form-group">
       <h3 class="mb-0"><strong>お届け先</strong></h3>
       <div class="ml-5">
-        <%= f.radio_button :address_type, "self", id: "address_type_self" %>
-        <%= f.label :address_type_self, "ご自身の住所", class: "mb-0", for: "address_type_self" %>
-
-        <% if f.object.address_type == "self" || f.object.address_type.nil? %>
-          <p class="ml-4">
-            〒<%= current_customer.postal_code %>
-            <%= current_customer.address %><br>
-            <%= current_customer.full_name %>
-          </p>
-        <% end %>
+        <%= f.radio_button :address, "self", id: "address_self" %>
+        <%= f.label :address_self, "ご自身の住所", class: "mb-0", for: "address_self" %>
       </div>
 
-     <!-- <div class="form-group mb-0 ml-5">
-        <%= f.radio_button :address_type, "registered", id: "address_type_registered" %>
-        <%= f.label :address_type_registered, "登録済み住所から選択", for: "address_type_registered" %>
-        <div class="ml-4">
-          <%= f.collection_select :address_id, Address.all, :id, :address_display, include_blank: true, id: "address_id" %>
-        </div>
-      </div>
-
-      <div class="form-group mt-3 mb-0 ml-5">
-        <%= f.radio_button :address_type, "new", id: "address_type_new" %>
-        <%= f.label :address_type_new, "新しいお届け先", class: "mb-0", for: "address_type_new" %>
-
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-3 col-xs-10 text-left ml-2">
-              <%= f.label :postal_code, "郵便番号(ハイフンなし)", class: "mt-0 mb-0", style: "display: inline-block; white-space: nowrap; vertical-align: middle;", for: "postal_code" %>
-            </div>
-            <div class="col-sm-4 col-xs-12 pl-0">
-              <%= f.text_field :postal_code, class: "form-control form-control-sm", id: "postal_code", autocomplete: "postal-code" %>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row mt-2">
-            <div class="col-sm-3 col-xs-10 text-left ml-2">
-              <%= f.label :address, "住所", class: "mt-0 mb-0", style: "display: inline-block; white-space: nowrap; vertical-align: middle;", for: "address" %>
-            </div>
-            <div class="col-sm-8 col-xs-12 pl-0">
-              <%= f.text_field :address, class: "form-control form-control-sm", id: "address", autocomplete: "street-address" %>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row mt-2">
-            <div class="col-sm-3 col-xs-12 text-left ml-2">
-              <%= f.label :name, "宛名", class: "mt-0 mb-0", style: "display: inline-block; white-space: nowrap; vertical-align; middle;", for: "name" %>
-            </div>
-            <div class="col-sm-4 col-xs-12 pl-0">
-              <%= f.text_field :name, class: "form-control form-control-sm", id: "name", autocomplete: "name" %>
-            </div>
-          </div>
-        </div>
-      </div>-->
+      <% if f.object.address == "self" || f.object.address.nil? %>
+        <p class="ml-5 pl-3">
+          〒<%= current_customer.postal_code %>
+          <%= current_customer.address %><br>
+          <%= current_customer.full_name %>
+        </p>
+      <% end %>
     </div>
 
     <div class="text-center mt-2 mb-2">

@@ -17,31 +17,14 @@ class Public::OrdersController < ApplicationController
       @order.postal_code = @address.postal_code
       @order.address = @address.address
       @order.name = @address.name
-    else
-      @address = Address.new(
-        customer_id: current_customer.id,
-        postal_code: params[:order][:postal_code],
-        address: params[:order][:address].to_s,
-        name: params[:order][:name]
-      )
-
-      if @address.save
-        flash[:success] = "新しいお届け先が保存されました。"
-        @order.postal_code = @address.postal_code
-        @order.address = @address.address
-        @order.name = @address.name
-      else
-        flash[:error] = "お届け先の保存に失敗しました。エラーメッセージを確認してください。"
-        render :confirm_order
-      end
     end
 
-    if @order.address_type == 'self'
+    if @order.address == 'self'
       # ご自身の住所を設定
       @order.address = current_customer.address
       @order.postal_code = current_customer.postal_code
       @order.name = current_customer.full_name
-    elsif @order.address_type == 'registered' && @order.address_id.present?
+    elsif @order.address == 'registered' && @order.address_id.present?
       # 登録済みの住所を設定
       selected_address = Address.find(@order.address_id)
       @order.address = selected_address.address
@@ -68,7 +51,9 @@ class Public::OrdersController < ApplicationController
     #payment_method = params[:order][:payment_method].to_sym
     #shipping_fee = 800
     @order = current_customer.orders.new(order_params)
+
     @order.save!
+    Rails.logger.debug("Order object before save: #{@order.inspect}")
     #order.save_order_information(customer, shipping_address, payment_method, shipping_fee)
 
     # カートアイテムを一つずつ処理
@@ -80,6 +65,7 @@ class Public::OrdersController < ApplicationController
       )
       # カートアイテムを削除
     end
+
     current_customer.cart_items.destroy_all
 
     redirect_to order_completed_public_orders_path
@@ -91,13 +77,13 @@ class Public::OrdersController < ApplicationController
 
   def show
     @order = current_customer.orders.find_by(id: params[:id])
-    @order_items = @order.order_items
+    @order_items = @order.order_items if @order
   end
 
   private
 
   def order_params
-    params.require(:order).permit(:shipping_fee, :total_price, :payment_method, :address_type, :address_id, :postal_code, :address, :name)
+    params.require(:order).permit(:shipping_fee, :total_price, :payment_method, :address_type, :postal_code, :address, :name)
   end
 
   def calculate_total_price(cart_items)

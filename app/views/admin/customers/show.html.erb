@@ -28,10 +28,13 @@
     <div class="col-sm-9 mt-3"><%= @customer.address %></div>
 
     <div class="col-sm-2 mt-3">電話番号</div>
-    <div class="col-sm-9 mt-3"><%= @customer.phone_number %></div>
+    <div class="col-sm-9 mt-3"><%= @customer.telephone_number %></div>
 
     <div class="col-sm-2 mt-3">メールアドレス</div>
     <div class="col-sm-9 mt-3"><%= @customer.email %></div>
+
+    <div class="col-sm-2 mt-3">会員ステータス</div>
+    <div class="col-sm-9 mt-3"><%= @customer.is_active ? '有効' : '退会' %></div>
   </div>
 
   <div class="row mt-4" style="white-space: nowrap;">
