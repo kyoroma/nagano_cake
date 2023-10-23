@@ -62,7 +62,7 @@
     <div class="col"></div>
   </div>
 
-  <%= form_with(model: @order, url: place_order_public_orders_path, method: :post, local: true) do |form| %>
+  <%= form_with(model: @order, url: place_order_orders_path, method: :post, local: true) do |form| %>
     <%= form.hidden_field :shipping_fee, value: @order.shipping_fee %>
     <%= form.hidden_field :total_price, value: @order.total_price %>
     <%= form.hidden_field :payment_method, value: @order.payment_method %>

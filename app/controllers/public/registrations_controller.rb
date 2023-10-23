@@ -15,7 +15,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
     super do |resource|
       if resource.persisted?
         sign_in(resource)
-        redirect_to public_customer_my_page_path and return
+        redirect_to customer_my_page_path and return
       end
     end
   end

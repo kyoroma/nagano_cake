@@ -6,7 +6,7 @@
     <div class="row mt-3">
       <% @items.each do |item| %>
         <div class="col-md-3">
-          <%= link_to public_item_path(item) do %>
+          <%= link_to item_path(item) do %>
             <% if item.image.attached? %>
               <%= image_tag item.image, class: "img-fluid" %>
             <% else %>

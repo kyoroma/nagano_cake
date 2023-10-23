@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  namespace :public do
+  scope module: :public do
 
     resources :items, only: [:index, :show], controller: 'items'
 
@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     root to: 'homes#top'
     resources :items, except: [:destroy]
     resources :orders, only: [:show]
-    resources :customers, only: [:index, :show, :edit]
+    resources :customers, only: [:index, :show, :edit, :update]
     delete '/sign_out', to: 'sessions#destroy', as: :destroy_admin_session
   end
 

@@ -9,8 +9,8 @@
         <br>退会する場合は、「退会する」をクリックしてください。</p>
       </div>
       <div class="text-center mt-4">
-        <%= link_to "退会しない", public_customer_my_page_path, class: "btn btn-primary mr-4" %>
-        <%= link_to "退会する", deactivate_public_customer_path(current_customer), method: :patch, class: "btn btn-danger" %>
+        <%= link_to "退会しない", customer_my_page_path, class: "btn btn-primary mr-4" %>
+        <%= link_to "退会する", deactivate_customer_path(current_customer), method: :patch, data: { confirm: '本当に退会しますか？' }, class: "btn btn-danger" %>
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@ class Public::CartItemsController < ApplicationController
       if @cart_item.amount == 0
         @cart_item.destroy
       end
-      redirect_to public_cart_items_path, notice: 'カート内商品を更新しました。'
+      redirect_to cart_items_path, notice: 'カート内商品を更新しました。'
     else
       @cart_items = current_customer.cart_items
       render :index
@@ -21,12 +21,12 @@ class Public::CartItemsController < ApplicationController
   def destroy
     @cart_item = CartItem.find(params[:id])
     @cart_item.destroy
-    redirect_to public_cart_items_path, notice: 'カートから商品を削除しました。'
+    redirect_to cart_items_path, notice: 'カートから商品を削除しました。'
   end
 
   def destroy_all
     current_customer.cart_items.destroy_all
-    redirect_to public_cart_items_path, notice: 'カート内の全ての商品を削除しました。'
+    redirect_to cart_items_path, notice: 'カート内の全ての商品を削除しました。'
   end
 
   def create
@@ -38,7 +38,7 @@ class Public::CartItemsController < ApplicationController
       # 既にカートに存在する場合
       new_amount = @cart_item.amount + cart_item_params[:amount].to_i
       if @cart_item.update(amount: new_amount)
-        redirect_to public_cart_items_path, notice: 'カート内の商品数量を更新しました。'
+        redirect_to cart_items_path, notice: 'カート内の商品数量を更新しました。'
       else
         # 更新に失敗した場合の処理
         render 'public/items/show'
@@ -48,7 +48,7 @@ class Public::CartItemsController < ApplicationController
       cart_item = current_customer.cart_items.new(cart_item_params)
 
       if cart_item.save!
-        redirect_to public_cart_items_path, notice: 'カートに商品を追加しました。'
+        redirect_to cart_items_path, notice: 'カートに商品を追加しました。'
       else
         render 'public/items/show'
       end

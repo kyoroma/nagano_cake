@@ -41,7 +41,7 @@
       <h3 style="display: inline-block;">ショッピングカート</h3>
     </div>
     <div class="col-2 text-right pr-0">
-      <%= form_with(model: @cart_item, url: destroy_all_public_cart_items_path, method: :delete, remote: true) do |f| %>
+      <%= form_with(model: @cart_item, url: destroy_all_cart_items_path, method: :delete, remote: true) do |f| %>
         <%= f.submit 'カートを空にする', class: 'btn btn-danger' %>
       <% end %>
     </div>
@@ -68,7 +68,7 @@
                   </td>
                   <td style="vertical-align: middle;"><%= cart_item.item.with_tax_price %></td>
                   <td class="p-0" style="vertical-align: middle;">
-                    <%= form_with(model: cart_item, url: public_cart_item_path(cart_item), local: true, method: :patch) do |f| %>
+                    <%= form_with(model: cart_item, url: cart_item_path(cart_item), local: true, method: :patch) do |f| %>
                       <div class="d-flex justify-content-center">
                         <div class="mr-2 mt-1">
                           <%= f.select :amount, options_for_select((1..10).to_a, cart_item.amount), {}, class: 'form-control form-control-sm' %>
@@ -81,7 +81,7 @@
                   </td>
                   <td style="vertical-align: middle;"><%= cart_item.subtotal %></td>
                   <td class="text-center">
-                    <%= link_to '削除する', public_cart_item_path(cart_item), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+                    <%= link_to '削除する', cart_item_path(cart_item), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
                   </td>
                 </tr>
                 <% @合計金額 += cart_item.subtotal %>
@@ -109,7 +109,7 @@
         </div>
         <div class="text-center mt-4">
           <% if @cart_items.present? %>
-            <%= link_to '情報入力に進む', new_public_order_path, class: 'btn btn-success', style: 'width: 160px;', disabled: @cart_items.empty? %>
+            <%= link_to '情報入力に進む', new_order_path, class: 'btn btn-success', style: 'width: 160px;', disabled: @cart_items.empty? %>
           <% end %>
         </div>
       </div>

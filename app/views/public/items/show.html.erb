@@ -10,7 +10,7 @@
       <p><%= @item.introduction %></p>
       <p class="mt-5"><strong>¥<%= @item.with_tax_price %></strong><span style="font-size: 0.5rem;">（税込）</span></p>
 
-      <%= form_with model: @cart_item, url: public_cart_items_path, method: :post do |f| %>
+      <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
         <div class="form-row align-items-center">
           <div class="col-sm-4 mr-3">
             <%= f.select :amount, options_for_select((1..10).to_a), {}, class: "form-control", style: "width: 130px;" %>

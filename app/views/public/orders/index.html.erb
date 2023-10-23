@@ -51,7 +51,7 @@
               <% end %>
             </td>
             <td style="vertical-align: middle;"><%= order.total_price %>円</td>
-            <td style="vertical-align: middle;"><%= link_to "表示する", public_order_path(order), class: "btn btn-primary", style: "white-space: nowrap;" %></td>
+            <td style="vertical-align: middle;"><%= link_to "表示する", order_path(order), class: "btn btn-primary", style: "white-space: nowrap;" %></td>
           </tr>
         <% end %>
       </tbody>

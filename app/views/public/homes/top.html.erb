@@ -23,7 +23,7 @@
     <% @items.each do |item| %>
       <div class="col-md-3">
         <% if item.image.attached? %>
-          <%= link_to public_item_path(item) do %>
+          <%= link_to item_path(item) do %>
             <%= image_tag item.image, class: "img-fluid" %>
           <% end %>
         <% else %>
@@ -35,6 +35,6 @@
     <% end %>
   </div>
   <div class="col-md-12 mb-3 text-right">
-    <%= link_to "全ての商品を見る>", public_items_path %>
+    <%= link_to "全ての商品を見る>", items_path %>
   </div>
 </div>
